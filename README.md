@@ -8,6 +8,10 @@
 - less
 
 # 业务旋转
+## 知识点
+- less
+- animation
+- Math
 ## 实现效果
 在vue的组件中，
 仿照360浏览器：https://browser.360.cn/se/
@@ -134,7 +138,11 @@
 ### 最后，实现各个数据点的零散分布，和定位计算
 #### 零散分布
 大致思路是这样的：将一个圆分为八等份，角度以45度为单位增加：如第一个点到x轴为0度（平行），第二个点为45度，第三个点为90度，之后135度，180，225，270，315，360（等于0）.
+
 那么零散分布的问题就可以简化为，将这个点自定义的放置在这八个点的哪个位置，这样我们对点的分布就可控多了。
+```
+ theta: [0, Math.PI/4, Math.PI/2, 3*(Math.PI/4), Math.PI, 5*(Math.PI/4), 3*(Math.PI/2), 7*(Math.PI/4)] // set 8 points on cycle
+```
 
 #### 定位计算
 首先回忆两个最简单的数学式子：
@@ -157,6 +165,7 @@ y = r * sin(θ) // 根据偏转度数计算圆上的纵坐标
 
 全部代码如下；
 ```
+// data:
 items: [
           {
             name: "旅游行业",
@@ -172,8 +181,10 @@ items: [
             left: 0,
             top: 0,
           },
-         ....]
+         ....],
+theta: [0, Math.PI/4, Math.PI/2, 3*(Math.PI/4), Math.PI, 5*(Math.PI/4), 3*(Math.PI/2), 7*(Math.PI/4)] // set 8 points on cycle
 
+// methods:
 dotposition: function() {
         let count = this.items.length
         for (let i=0; i <= count; i++) {
